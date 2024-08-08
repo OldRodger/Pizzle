@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../includes/head.ejs') %>
+
+<body>
+  <%- include('../includes/banner.ejs') %>
+  <main class="py-20">
+    <div class="w-1/2 mx-auto">
+      <% if (order) { %>
+      <ul class="text-stone-700 divide-y">
+        <% order.cart.forEach(item => { %>
+        <li class="flex items-center justify-between py-3">
+          <img src="<%= item.imageUrl %>" alt="<%= item.title %>" class="w-28">
+          <div>
+            <h3 class="text-2xl capitalize font-heading font-semibold "><%= item.title %></h3>
+            <p class="text-sm text-stone-400">#<%= item._id.toString().slice(-8) %></p>
+          </div>
+          <div class="flex gap-5 border-2 border-light rounded-full py-2 px-5">
+
+            <span>&times; <%= item.quantity %></span>
+
+          </div>
+
+          <span>
+            <span>$</span>
+            <span><%= (item.price * item.quantity).toFixed(2) %></span>
+          </span>
+
+        </li>
+        <% }) %>
+        <li class="text-sm font-heading py-8 space-y-4">
+          <p>
+            <span class="uppercase mr-5">copy this order id: </span>
+            <span class="text-stone-500 "><%= order._id %></span>
+          </p>
+          <p>
+            <span class="uppercase mr-5">name: </span>
+            <span class="text-stone-500 "><%= order.name %></span>
+          </p>
+          <p>
+            <span class="uppercase mr-5">phone: </span>
+            <span class="text-stone-500 "><%= order.phone %></span>
+          </p>
+          <p>
+            <span class="uppercase mr-5">address: </span>
+            <span class="text-stone-500 "><%= order.address %>, <%= order.city %>, <%= order.province %></span>
+          </p>
+          <p>
+            <span class="uppercase mr-5">total spent: </span>
+            <span class="text-stone-500 "><%= order.total%></span>
+          </p>
+        </li>
+        <% } else {%>
+        <div>
+          <form action="/search-order" method="post">
+            <label class="flex flex-col gap-5 items-center">
+              <p class="text-center text-2xl font-heading font-semibold">No orders searched yet</p>
+              <input class="input text-xl text-stone-500" name="orderID" placeholder="Order #">
+              <button class="bg-primary uppercase px-5 py-3 rounded-full flex items-center gap-2 w-fit hover:bg-amber-400">
+                <span class="material-symbols-outlined">
+                  search
+                </span>
+                <span>
+                  search
+                </span>
+              </button>
+            </label>
+          </form>
+        </div>
+        <% } %>
+    </div>
+  </main>
+</body>
+
+</html>

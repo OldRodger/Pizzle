@@ -1,0 +1,11 @@
+<%- include('../includes/nav.ejs') %>
+<header class="h-72 bg-secondary flex items-center justify-center">
+  <div class="text-center font-heading">
+    <h1 class="text-5xl mb-4 capitalize font-extrabold"><%= title %></h1>
+    <span class="space-x-2 text-stone-500 text-sm font-bold capitalize">
+      <a href="/">Home</a>
+      <span>&#10095;</span>
+      <span class="text-primary"><%= path.split("/").at(1) %></span>
+    </span>
+  </div>
+</header>

@@ -1,0 +1,33 @@
+<header class="<%= path === "/" ? "absolute text-amber-50" : "bg-secondary text-dark border-b border-stone-700/10" %> z-50 w-full py-6 ">
+  <div class="w-5/6 mx-auto">
+    <div class="flex items-center gap-20">
+      <a href="/">
+        <img src="/static/images/<%= path === "/" ? "logo.png" : "logo_black.png" %>" alt="logo" class="w-40">
+      </a>
+      <nav class=" text-sm font-heading grow ">
+        <ul class="flex gap-8 w-full uppercase font-semibold cursor-pointer">
+          <li class="<%= path === "/" ? "text-primary border-b-2 border-current" : "hover:text-yellow-400" %>">
+            <a href="/">Home</a>
+          </li>
+          <li class="<%= path === "/menu" ? "text-primary border-b-2 border-current" : "hover:text-yellow-400" %>">
+            <a href="/menu">Menu</a>
+          </li>
+          <li class="<%= path === "/cart" ? "text-primary border-b-2 border-current" : "hover:text-yellow-400" %>">
+            <a href="/cart">Cart</a>
+          </li>
+          <li class="<%= path === "/order" ? "text-primary border-b-2 border-current" : "hover:text-yellow-400" %>">
+            <a href="/order">Orders</a>
+          </li>
+          <li class="ml-auto">
+            <a href="/cart">
+              <span class="material-symbols-outlined">
+                shopping_bag
+              </span>
+            </a>
+          </li>
+          <li class="text-2xl">🇨🇦</li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>

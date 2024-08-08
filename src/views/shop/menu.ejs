@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../includes/head.ejs') %>
+
+<body>
+  <%- include('../includes/banner.ejs') %>
+  <main class="py-20">
+    <div class="w-5/6 mx-auto">
+      <nav class="mb-10">
+        <ul class="bg-light text-center flex w-3/5 mx-auto rounded-full uppercase font-heading text-sm">
+          <li class="grow py-5 rounded-full <%= query === "all" && "bg-primary text-white" %>">
+            <a href="/menu">all</a>
+          </li>
+          <li class="grow py-5 rounded-full <%= query === "pizzas" && "bg-primary text-white" %>">
+            <a href="/menu?filter=pizzas">pizzas</a>
+          </li>
+          <li class="grow py-5 rounded-full <%= query === "drinks" && "bg-primary text-white" %>">
+            <a href="/menu?filter=drinks">drinks</a>
+          </li>
+          <li class="grow py-5 rounded-full <%= query === "salads" && "bg-primary text-white" %>">
+            <a href="/menu?filter=salads">salads</a>
+          </li>
+          <li class="grow py-5 rounded-full <%= query === "pastas" && "bg-primary text-white" %>">
+            <a href="/menu?filter=pastas">pastas</a>
+          </li>
+          <li class="grow py-5 rounded-full <%= query === "burgers" && "bg-primary text-white" %>">
+            <a href="/menu?filter=burgers">burgers</a>
+          </li>
+          <li class="grow py-5 rounded-full <%= query === "deserts" && "bg-primary text-white" %>">
+            <a href="/menu?filter=deserts">deserts</a>
+          </li>
+        </ul>
+      </nav>
+
+      <% if (products.length) { %>
+      <ul class="grid grid-cols-2 gap-20">
+        <% products.forEach(product => { %>
+        <li class="group relative flex items-center gap-2 w-fit px-4">
+          <img src="<%= product.imageUrl %>" alt="<%= product.title %>" class="h-28">
+          <div>
+            <span class="flex gap-5 items-center justify-between font-heading font-semibold text-stone-700">
+              <h3 class="text-2xl capitalize "><%= product.title %></h3>
+              <p class=" text-xl"><sup>$</sup> <%= product.price %></p>
+            </span>
+            <span class="text-sm text-stone-500 capitalize"><%= product.sides.join(", ") %></span>
+          </div>
+
+          <div class="absolute opacity-0 grid place-items-center inset-0 rounded-md cursor-pointer bg-stone-700 backdrop-blur-[1px] group-hover:opacity-100 transition-opacity duration-500">
+            <form action="/cart" method="post">
+              <input type="hidden" name="productID" value="<%= product._id %>">
+              <button class="text-primary flex items-center gap-2 px-5 py-5 rounded-full text-sm font-heading">
+                <span class="material-symbols-outlined">
+                  shopping_cart
+                </span>
+                <span class="uppercase">
+                  add to cart
+                </span>
+              </button>
+            </form>
+          </div>
+        </li>
+        <% }) %>
+
+
+      </ul>
+
+      <% } %>
+    </div>
+  </main>
+</body>
+
+</html>

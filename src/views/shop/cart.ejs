@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../includes/head.ejs') %>
+
+<body>
+  <%- include('../includes/banner.ejs') %>
+  <main>
+    <% if (cart.length) { %>
+    <div class="w-4/5 mx-auto grid grid-cols-[1fr_auto] gap-10 divide-x">
+      <div class="py-10">
+        <ul class="text-stone-700 divide-y">
+          <% cart.forEach(item => { %>
+          <li class="flex items-center justify-between py-3">
+            <img src="<%= item.imageUrl %>" alt="<%= item.title %>" class="w-28">
+            <div>
+              <h3 class="text-2xl capitalize font-heading font-semibold "><%= item.title %></h3>
+              <p class="text-sm text-stone-400">#<%= item._id.toString().slice(-8) %></p>
+            </div>
+            <div class="flex gap-5 border-2 border-light rounded-full py-2 px-5">
+              <form action="/decrease-cart-quantity" method="post" class="<%= item.quantity === 1 && "hidden" %>">
+                <input type="hidden" name="productID" value="<%= item._id %>">
+                <button>
+                  <span>&mdash;</span>
+                </button>
+              </form>
+              <span><%= item.quantity %></span>
+              <form action="/increase-cart-quantity" method="post">
+                <input type="hidden" name="productID" value="<%= item._id %>">
+                <button>
+                  <span class="rotate-45 inline-block">&#x2715;</span>
+                </button>
+              </form>
+            </div>
+
+            <span>
+              <span>$</span>
+              <span><%= (item.price * item.quantity).toFixed(2) %></span>
+            </span>
+
+            <form action="/delete-cart-item" method="post">
+              <input type="hidden" name="productID" value="<%= item._id %>">
+              <button class="transition duration-300 w-6 aspect-square rounded-full hover:text-white hover:bg-primary">
+                <span>&#x2715;</span>
+              </button>
+            </form>
+          </li>
+          <% }) %>
+          <li class="text-right py-6 space-x-2">
+            <span class="text-sm font-heading">Subtotal</span>
+            <span class="text-2xl font-bold">$ <%= total.toFixed(2)%></span>
+          </li>
+        </ul>
+
+      </div>
+      <div class="w-96 ">
+        <% if (errorMsg.length) { %>
+        <div class="bg-primary p-4 text-sm space-x-2 font-heading">
+          <span>ERROR: </span>
+          <span><%= errorMsg.at(0) %></span>
+        </div>
+        <% } %>
+        <div class="p-10">
+          <form action="/order" method="post" class="flex flex-col gap-4">
+            <label class="space-y-2">
+              <p class="font-heading text-sm">Name</p>
+              <input class="input" name="name">
+            </label>
+            <label class="space-y-2">
+              <p class="font-heading text-sm">Phone number</p>
+              <input class="input" name="phone">
+            </label>
+            <label class="space-y-2">
+              <p class="font-heading text-sm">Email</p>
+              <input class="input" name="email">
+            </label>
+            <label class="space-y-2">
+              <p class="font-heading text-sm">Address</p>
+              <input class="input" name="address">
+            </label>
+            <label class="space-y-2">
+              <p class="font-heading text-sm">City</p>
+              <input class="input" name="city">
+            </label>
+            <label class="space-y-2 mb-5">
+              <p class="font-heading text-sm">Province</p>
+              <select name="province" class="input">
+                <option>Alberta</option>
+                <option>British Columbia</option>
+                <option>Manitoba</option>
+                <option>New Brunswick</option>
+                <option>Newfoundland and Labrador</option>
+                <option>Nova Scotia</option>
+                <option>Ontario</option>
+                <option>Prince Edward Island</option>
+                <option>Quebec</option>
+                <option>Saskatchewan</option>
+              </select>
+            </label>
+
+            <input type="hidden" name="cart" value="<%= JSON.stringify(cart) %>">
+            <input type="hidden" name="total" value="<%= total %>">
+            <button class="bg-stone-700 tracking-widest transition duration-500 text-secondary font-heading py-5 rounded-full hover:bg-stone-800 animate-bounce">Checkout</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <% } else {%>
+    <div class="py-10 flex flex-col items-center gap-4">
+      <h1 class="text-2xl font-heading">
+        There are no items in your cart.
+      </h1>
+
+      <a href="/menu" class="bg-primary uppercase px-5 py-3 rounded-full flex items-center gap-2 w-fit hover:bg-yellow-400">
+        <span class="material-symbols-outlined">
+          shopping_cart
+        </span>
+        <span class="text-sm">
+          order now
+        </span>
+      </a>
+    </div>
+    <% } %>
+  </main>
+</body>
+
+</html>
